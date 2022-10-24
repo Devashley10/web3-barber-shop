@@ -1,7 +1,7 @@
 # [BARBERSHOP-DApp](https://devashley10.github.io/web3-barber-shop)
 
 This Dapp provides a way for a barber shop to handle their customer appointments using the Celo Blockchain.
-There is a set fee for each service rendered(Hair Cut, Hait Treatment, e.t.c) and customer priority(Home Service, VIP, Regular).
+There is a set fee for each service rendered(Hair Cut, Hair Treatment, e.t.c) and customer priority(Home Service, VIP, Regular) in the smart contract.
 
 User can pay the fee and book an appointment at any time within 5days of the booking time, and the appointment expires once the booking time and date passes.
 
