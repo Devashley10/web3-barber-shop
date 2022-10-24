@@ -49,7 +49,7 @@ export const BookAppointment = ({
     })
 
     try {
-      await approve(new BigNumber(Number(amount)))
+      await approve(new BigNumber(Number(amount) * big).toString())
     } catch (error) {
       setMsg({
         show: true,
@@ -69,7 +69,7 @@ export const BookAppointment = ({
           day.split("#")[1],
           time,
           priority.split("#")[1],
-          new BigNumber(Number(amount)),
+          new BigNumber(Number(amount) * big).toString(),
           `${Date.now() + Number(day.split("#")[0])}`
         )
         .send({ from: kit.defaultAccount })
