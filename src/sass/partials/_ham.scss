@@ -1,0 +1,38 @@
+.ham {
+  display: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  .top,
+  .bottom {
+    height: 2px;
+    width: 36px;
+    margin-bottom: 0.5rem;
+    background-color: $text-color;
+    transition: 0.3s;
+  }
+
+  .bottom {
+    width: 26px;
+    margin-bottom: 0;
+  }
+}
+
+.ham.active {
+  .bottom,
+  .top {
+    width: 36px;
+    margin-bottom: 0;
+    transform: rotate(45deg);
+  }
+
+  .bottom {
+    transform: rotate(-45deg);
+    margin-top: -2px;
+  }
+}
+
+@media (max-width: 700px) {
+  .ham {
+    display: block;
+  }
+}

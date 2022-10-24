@@ -1,0 +1,51 @@
+.wallet {
+  padding: 0.5rem 1rem;
+  // border: 1px solid #000;
+  box-shadow: -2px 4px 12px #5f8f9433 inset;
+}
+
+.dashboard {
+  margin-bottom: 2rem;
+}
+
+.appointment-form {
+  width: 30%;
+  background-color: #fff;
+  padding: 1rem 1rem 2rem 1rem;
+  box-shadow: 2px 4px 19px rgba(39, 39, 39, 0.1);
+  border-radius: 8px;
+}
+
+.book {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  &-history {
+    margin-left: 8%;
+    width: 60%;
+  }
+  h1 {
+    font-size: 2rem;
+    text-transform: uppercase;
+    margin: 1rem 0;
+    line-height: 2rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .appointment-form {
+    width: 100%;
+    margin: 2rem 0;
+  }
+  .book {
+    display: block;
+    &-history {
+      margin: 2rem 0;
+      width: 100%;
+    }
+    h1 {
+      font-size: 2rem;
+      line-height: 2rem;
+    }
+  }
+}

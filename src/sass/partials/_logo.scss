@@ -1,0 +1,12 @@
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-text {
+  display: inline-flex;
+  flex-direction: column;
+  text-transform: uppercase;
+  line-height: 16px;
+  font-weight: 600;
+}
