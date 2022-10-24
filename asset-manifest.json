@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/web3-barber-shop/static/css/main.c21d1f4f.chunk.css",
-    "main.js": "/web3-barber-shop/static/js/main.aee66c9a.chunk.js",
-    "main.js.map": "/web3-barber-shop/static/js/main.aee66c9a.chunk.js.map",
+    "main.js": "/web3-barber-shop/static/js/main.813aa254.chunk.js",
+    "main.js.map": "/web3-barber-shop/static/js/main.813aa254.chunk.js.map",
     "runtime-main.js": "/web3-barber-shop/static/js/runtime-main.6b731b5e.js",
     "runtime-main.js.map": "/web3-barber-shop/static/js/runtime-main.6b731b5e.js.map",
     "static/css/2.329eff1f.chunk.css": "/web3-barber-shop/static/css/2.329eff1f.chunk.css",
@@ -20,6 +20,6 @@
     "static/css/2.329eff1f.chunk.css",
     "static/js/2.5eb57ca6.chunk.js",
     "static/css/main.c21d1f4f.chunk.css",
-    "static/js/main.aee66c9a.chunk.js"
+    "static/js/main.813aa254.chunk.js"
   ]
 }
