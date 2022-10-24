@@ -15,11 +15,28 @@ export const BookAppointment = ({
   getTransactions,
   transactions,
 }) => {
+  const ERC20_DECIMAL = 18
   const [service, setService] = React.useState("")
   const [day, setDay] = React.useState("")
   const [time, setTime] = React.useState("")
   const [priority, setPriority] = React.useState("")
   const [amount, setAmount] = React.useState(0)
+  const [prices, setPrices] = React.useState([])
+  const big = 1e18
+  const getPrices = async () => {
+    try {
+      const prices = await contract.methods.getPrices().call()
+      setPrices(prices)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  React.useEffect(() => {
+    if (contract && kit) {
+      getPrices()
+    }
+  }, [contract, kit])
   const day_ = (dayNumber) =>
     new Date(new Date().setDate(new Date().getDate() + dayNumber))
   const onBooking = async (e) => {
@@ -87,7 +104,12 @@ export const BookAppointment = ({
           label={"service"}
           onChange={(e) => setService(e.target.value)}
           value={service}
-          menu={["5#Hair Cut", "3#Beard Trim", "7#Treatment", "4#Wash"]}
+          menu={[
+            `${prices.hair_cut}#Hair Cut`,
+            `${prices.beard_trim}#Beard Trim`,
+            `${prices.treatment}#Treatment`,
+            `${prices.washing}#Washing`,
+          ]}
         />
         <SelectItem
           label={"day"}
@@ -112,7 +134,11 @@ export const BookAppointment = ({
           label={"priority"}
           onChange={(e) => setPriority(e.target.value)}
           value={priority}
-          menu={["5# VIP", "0# Regular", "10# Home service"]}
+          menu={[
+            `${prices.vip}#VIP`,
+            `${prices.regular}#Regular`,
+            `${prices.home_service}#Home service`,
+          ]}
         />
         <p>
           Amount Payable:{" "}
