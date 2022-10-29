@@ -15,14 +15,12 @@ export const BookAppointment = ({
   getTransactions,
   transactions,
 }) => {
-  const ERC20_DECIMAL = 18
   const [service, setService] = React.useState("")
   const [day, setDay] = React.useState("")
   const [time, setTime] = React.useState("")
   const [priority, setPriority] = React.useState("")
   const [amount, setAmount] = React.useState(0)
   const [prices, setPrices] = React.useState([])
-  const big = 1e18
   const getPrices = async () => {
     try {
       const prices = await contract.methods.getPrices().call()

@@ -26,17 +26,19 @@ contract BarberShop {
     }
 
     struct TransactionDetails {
+        string name;
+        string additionalInfo;
         string service;
         string day;
         string time;
         string priority;
         uint amount;
-        string expiration_time;
+        uint expiration_time;
     }
 
     prices public servicePrices = prices(5,7,4,3,0,5,10);
     address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
-    address internal shopAddress = 0xA2fb54295438715198505c466195a22c7e4e6d65;
+    address internal shopAddress = msg.sender;
 
     mapping(address => TransactionDetails[]) internal transactions;
 
@@ -46,13 +48,16 @@ contract BarberShop {
         return servicePrices;
     }
 
+
     function bookAppointment(
+        string memory name,
+        string memory additionalInfo,
         string memory _service,
         string memory _day,
         string memory _time,
         string memory _priority,
         uint _amount,
-        string memory _expiration_time
+        uint _expiration_time
     ) public payable
     {
         require(
@@ -64,7 +69,7 @@ contract BarberShop {
             "Transfer Attempt Failed!"
         );
         transactions[payable(msg.sender)].push(TransactionDetails(
-            _service, _day, _time, _priority, _amount, _expiration_time
+           name, additionalInfo, _service, _day, _time, _priority, _amount, _expiration_time
         ));
     }
 
@@ -76,6 +81,11 @@ contract BarberShop {
             a[a.length - i - 1] = t;
         }
         return true;
+    }
+
+    function deleteTransactions(address _address)public {
+        require(msg.sender == shopAddress, "Only shop can delete appoinment");
+        delete transactions[_address];
     }
 
     function getTransactions() public view returns(TransactionDetails[] memory){

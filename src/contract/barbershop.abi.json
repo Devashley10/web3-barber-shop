@@ -1,178 +1,211 @@
 [
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_service",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_day",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_time",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_priority",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_expiration_time",
-				"type": "string"
-			}
-		],
-		"name": "bookAppointment",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getPrices",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "uint256",
-						"name": "hair_cut",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "treatment",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "washing",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "beard_trim",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "regular",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "vip",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "home_service",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct BarberShop.prices",
-				"name": "",
-				"type": "tuple"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getTransactions",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "service",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "day",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "time",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "priority",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "expiration_time",
-						"type": "string"
-					}
-				],
-				"internalType": "struct BarberShop.TransactionDetails[]",
-				"name": "",
-				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "servicePrices",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "hair_cut",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "treatment",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "washing",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "beard_trim",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "regular",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "vip",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "home_service",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	}
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "additionalInfo",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_service",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_day",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_time",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_priority",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_amount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_expiration_time",
+                "type": "uint256"
+            }
+        ],
+        "name": "bookAppointment",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_address",
+                "type": "address"
+            }
+        ],
+        "name": "deleteTransactions",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getPrices",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "uint256",
+                        "name": "hair_cut",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "treatment",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "washing",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "beard_trim",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "regular",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "vip",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "home_service",
+                        "type": "uint256"
+                    }
+                ],
+                "internalType": "struct BarberShop.prices",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getTransactions",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "additionalInfo",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "service",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "day",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "time",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "priority",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "amount",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "expiration_time",
+                        "type": "uint256"
+                    }
+                ],
+                "internalType": "struct BarberShop.TransactionDetails[]",
+                "name": "",
+                "type": "tuple[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "servicePrices",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "hair_cut",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "treatment",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "washing",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "beard_trim",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "regular",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "vip",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "home_service",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
 ]
