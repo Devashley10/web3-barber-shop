@@ -1,20 +1,22 @@
 //SPDX-License-Identifier: MIT
 pragma solidity >=0.7.0 <0.9.0;
-
-
-interface IERC20Token {
-  function transfer(address, uint256) external returns (bool);
-  function approve(address, uint256) external returns (bool);
-  function transferFrom(address, address, uint256) external returns (bool);
-  function totalSupply() external view returns (uint256);
-  function balanceOf(address) external view returns (uint256);
-  function allowance(address, address) external view returns (uint256);
-
-  event Transfer(address indexed from, address indexed to, uint256 value);
-  event Approval(address indexed owner, address indexed spender, uint256 value);
-}
+/**
+@author Devashley10 on github
+@title Barbing shop smart contract
+*/
 
 contract BarberShop {
+
+    address payable public owner;
+
+
+    constructor(){
+        owner = payable(msg.sender);
+    }
+
+    /**
+    user defined variable called prices
+    */
     struct prices {
         uint hair_cut;
         uint treatment;
@@ -25,62 +27,86 @@ contract BarberShop {
         uint home_service;
     }
 
+    /**
+    user defined variable called TransactionDetails
+    */
     struct TransactionDetails {
         string service;
-        string day;
-        string time;
+        uint Startdate;
         string priority;
         uint amount;
-        string expiration_time;
     }
 
-    prices public servicePrices = prices(5,7,4,3,0,5,10);
-    address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
-    address internal shopAddress = 0xA2fb54295438715198505c466195a22c7e4e6d65;
+    /** Prices of various services offered
+
+    key => value
+
+    haircut => 5
+
+    treatment => 7
+
+    washing => 4
+
+    beard_trim => 3
+
+    regular => 2
+
+    vip => 5
+
+    home_service => 10
+
+    */
+
+    prices public servicePrices = prices(5,7,4,3,2,5,10);
+
+    /// The latst booked date
+    uint public latest_booking_date;
 
     mapping(address => TransactionDetails[]) internal transactions;
 
-   
+    event bookings(address _sender,uint _date, uint price);
 
-    function getPrices() public view returns (prices memory){
-        return servicePrices;
-    }
-
+    /**
+    @dev function to book an appointment
+    @param _service The service being rendered
+    @param _day The date of booking appointment
+    @param _day The Priority of the booked appointment (important or casual)
+    @param _day The cost of the booked appointment
+    */
     function bookAppointment(
         string memory _service,
-        string memory _day,
-        string memory _time,
+        uint _day,
         string memory _priority,
-        uint _amount,
-        string memory _expiration_time
+        uint _amount
     ) public payable
     {
-        require(
-            IERC20Token(cUsdTokenAddress).transferFrom(
-                msg.sender,
-                payable(shopAddress),
-                _amount
-            ),
-            "Transfer Attempt Failed!"
-        );
+        require(_day > (latest_booking_date + 3600), "You have to book one hour ahead of the latest booked time");
+        require(_day > ((block.timestamp) + 3600), "It must be ahead of current time by an hour");
+        (bool sent,) = payable(owner).call{value: _amount}("");
+        require(sent, "Failed to send amount");
+
+        latest_booking_date = _day;
+
         transactions[payable(msg.sender)].push(TransactionDetails(
-            _service, _day, _time, _priority, _amount, _expiration_time
+            _service, _day, _priority, _amount
         ));
+
+        address _sender = (msg.sender);
+
+        emit bookings(_sender,_day,_amount);
     }
 
-    function reverse(TransactionDetails[] memory a) internal pure returns (bool) {
-        TransactionDetails memory t;
-        for (uint i = 0; i < a.length / 2; i++) {
-            t = a[i];
-            a[i] = a[a.length - i - 1];
-            a[a.length - i - 1] = t;
-        }
-        return true;
-    }
+    /**
+    @dev function to get transaction of a particular address
+    @param _booked_Address The address with a booked transaction
+    @return array The array gives every detail of the transaction
+    */
 
-    function getTransactions() public view returns(TransactionDetails[] memory){
+    function getTransactions(
+        address _booked_Address
+        ) 
+    public view returns(TransactionDetails[] memory){
         TransactionDetails[] memory _transactions = transactions[msg.sender];
-        reverse(_transactions);
         return _transactions;
     }
 
