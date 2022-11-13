@@ -3,69 +3,75 @@ pragma solidity >=0.7.0 <0.9.0;
 
 
 interface IERC20Token {
-  function transfer(address, uint256) external returns (bool);
-  function approve(address, uint256) external returns (bool);
   function transferFrom(address, address, uint256) external returns (bool);
-  function totalSupply() external view returns (uint256);
-  function balanceOf(address) external view returns (uint256);
-  function allowance(address, address) external view returns (uint256);
-
-  event Transfer(address indexed from, address indexed to, uint256 value);
-  event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
 contract BarberShop {
-    struct prices {
-        uint hair_cut;
-        uint treatment;
-        uint washing;
-        uint beard_trim;
-        uint regular;
-        uint vip;
-        uint home_service;
+    /// @dev List of barber services
+    enum Service {
+        HairCut,
+        Treatment,
+        Washing,
+        BeardTrim
     }
 
+    /// @dev List of priorities
+    enum Priority {
+        Regular,
+        VIP,
+        HomeService
+    }
+
+    /// @dev Structure of transaction detail
     struct TransactionDetails {
-        string service;
-        string day;
-        string time;
-        string priority;
-        uint amount;
-        string expiration_time;
+        Service service;
+        Priority priority;
+        uint256 amount;
+        uint256 bookAt;
+        uint256 expiredAt;
     }
 
-    prices public servicePrices = prices(5,7,4,3,0,5,10);
+    mapping(Service => uint256) public servicePrices;
+    mapping(Priority => uint256 public additionalPrices);
     address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
     address internal shopAddress = 0xA2fb54295438715198505c466195a22c7e4e6d65;
 
     mapping(address => TransactionDetails[]) internal transactions;
+    address public owner;
 
-   
+    modifier onlyOwner {
+        require(msg.sender == owner, "access denied");
+        _;
+    }
 
-    function getPrices() public view returns (prices memory){
-        return servicePrices;
+    constructor() {
+        owner = msg.sender;
     }
 
     function bookAppointment(
-        string memory _service,
-        string memory _day,
-        string memory _time,
-        string memory _priority,
-        uint _amount,
-        string memory _expiration_time
-    ) public payable
-    {
+        Service _service,
+        Priority _priority,
+        uint256 _amount,
+        uint256 _bookAt,
+        uint256 _expiredAt
+    ) public {
+        require(block.timestamp < _bookAt && _bookAt < _expiredAt, "invalid timestamp");
+        uint256 totalPrice = servicePrices[_service] + additionalPrices[_priority];
+        require(_amount == totalPrice, "not enough deposit");
+
+        transactions[msg.sender].push(TransactionDetails(
+            _service, _priority, _amount, _bookAt, _expiredAt
+        ));
+
+        // prevent reentrancy attacks
         require(
             IERC20Token(cUsdTokenAddress).transferFrom(
                 msg.sender,
-                payable(shopAddress),
+                shopAddress,
                 _amount
             ),
             "Transfer Attempt Failed!"
         );
-        transactions[payable(msg.sender)].push(TransactionDetails(
-            _service, _day, _time, _priority, _amount, _expiration_time
-        ));
     }
 
     function reverse(TransactionDetails[] memory a) internal pure returns (bool) {
@@ -84,4 +90,15 @@ contract BarberShop {
         return _transactions;
     }
 
+    function setServicePrice(Service _service, uint256 _price) external onlyOwner {
+        servicePrices[_service] = _price;
+    }
+
+    function setAdditionalPrice(Priority _priority, uint256 _price) external onlyOwner {
+        additionalPrices[_priority] = _price;
+    }
+
+    function setOwner(address _newOwner) external onlyOwner {
+        owner = _newOwner;
+    }
 }
